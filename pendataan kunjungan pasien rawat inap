@@ -1,0 +1,111 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Pasien {
+    int id;
+    string nama;
+    string jenisKelamin;
+    int usia;
+    string penyakit;
+    string kamar;
+};
+
+void tambahPasien(vector<Pasien>& daftarPasien) {
+    Pasien pasienBaru;
+    cout << "Masukkan ID Pasien: ";
+    cin >> pasienBaru.id;
+    cin.ignore();
+    cout << "Masukkan Nama Pasien: ";
+    getline(cin, pasienBaru.nama);
+    cout << "Masukkan Jenis Kelamin (L/P): ";
+    getline(cin, pasienBaru.jenisKelamin);
+    cout << "Masukkan Usia Pasien: ";
+    cin >> pasienBaru.usia;
+    cin.ignore();
+    cout << "Masukkan Penyakit Pasien: ";
+    getline(cin, pasienBaru.penyakit);
+    cout << "Masukkan Kamar yang ditempati: ";
+    getline(cin, pasienBaru.kamar);
+    
+    daftarPasien.push_back(pasienBaru);
+    cout << "Data pasien berhasil ditambahkan.\n\n";
+}
+
+void tampilkanPasien(const vector<Pasien>& daftarPasien) {
+    if (daftarPasien.empty()) {
+        cout << "Belum ada data pasien.\n";
+    } else {
+        cout << "Daftar Pasien Rawat Inap:\n";
+        cout << "----------------------------------------------------------\n";
+        for (const auto& pasien : daftarPasien) {
+            cout << "ID Pasien: " << pasien.id << endl;
+            cout << "Nama: " << pasien.nama << endl;
+            cout << "Jenis Kelamin: " << pasien.jenisKelamin << endl;
+            cout << "Usia: " << pasien.usia << endl;
+            cout << "Penyakit: " << pasien.penyakit << endl;
+            cout << "Kamar: " << pasien.kamar << endl;
+            cout << "----------------------------------------------------------\n";
+        }
+    }
+}
+
+void cariPasien(const vector<Pasien>& daftarPasien, int id) {
+    bool ditemukan = false;
+    for (const auto& pasien : daftarPasien) {
+        if (pasien.id == id) {
+            cout << "Data Pasien Ditemukan:\n";
+            cout << "ID Pasien: " << pasien.id << endl;
+            cout << "Nama: " << pasien.nama << endl;
+            cout << "Jenis Kelamin: " << pasien.jenisKelamin << endl;
+            cout << "Usia: " << pasien.usia << endl;
+            cout << "Penyakit: " << pasien.penyakit << endl;
+            cout << "Kamar: " << pasien.kamar << endl;
+            ditemukan = true;
+            break;
+        }
+    }
+    if (!ditemukan) {
+        cout << "Pasien dengan ID " << id << " tidak ditemukan.\n";
+    }
+}
+
+int main() {
+    vector<Pasien> daftarPasien;
+    int pilihan;
+
+    do {
+        cout << "MENU:\n";
+        cout << "1. Tambah Data Pasien\n";
+        cout << "2. Tampilkan Semua Pasien\n";
+        cout << "3. Cari Pasien Berdasarkan ID\n";
+        cout << "4. Keluar\n";
+        cout << "Pilih menu (1-4): ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                tambahPasien(daftarPasien);
+                break;
+            case 2:
+                tampilkanPasien(daftarPasien);
+                break;
+            case 3: {
+                int idCari;
+                cout << "Masukkan ID Pasien yang ingin dicari: ";
+                cin >> idCari;
+                cariPasien(daftarPasien, idCari);
+                break;
+            }
+            case 4:
+                cout << "Keluar dari program...\n";
+                break;
+            default:
+                cout << "Pilihan tidak valid! Silakan pilih lagi.\n";
+        }
+    } while (pilihan != 4);
+
+    return 0;
+}
